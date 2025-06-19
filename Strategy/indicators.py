@@ -47,11 +47,27 @@ def calculateMA(prices, length):
 
 volatilityAverageIndex = []
 
-volatilityAverageIndex = []
-
 def volatility(high, low, vma=20): # VMA = Volatility Moving Average
     v = (high - low) / 100
     volatilityAverageIndex.append(v)
     recent = volatilityAverageIndex[-vma:]
     vmaCalculated = sum(recent) / len(recent)
     return vmaCalculated, v
+
+def getVolumeData(ticker, session, data='vwap',):
+    d = yf.Ticker(str(ticker)).history(period=session)
+    volume = d['Volume'].sum()
+    vwap = ((d['High'] + d['Low'] + d['Close']) / 3 * d['Volume']).sum() / d['Volume'].sum()
+
+    if data == 'vwap':
+        return vwap 
+    elif data == 'volume':
+        return volume
+    else: 
+        raise ValueError("Invalid volume data type. Use 'vwap' or 'volume'.")
+    
+
+# Example usage
+    
+print(getVolumeData('AAPL', '1d', 'vwap'))  # Example usage
+print(getVolumeData('AAPL', '1d', 'volume',))  # Example usage
