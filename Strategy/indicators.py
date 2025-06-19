@@ -44,3 +44,14 @@ def calculateMA(prices, length):
         print("ERROR: Not enough data for MAs")
         return None
     return sum(prices[-length:]) / length
+
+volatilityAverageIndex = []
+
+volatilityAverageIndex = []
+
+def volatility(high, low, vma=20): # VMA = Volatility Moving Average
+    v = (high - low) / 100
+    volatilityAverageIndex.append(v)
+    recent = volatilityAverageIndex[-vma:]
+    vmaCalculated = sum(recent) / len(recent)
+    return vmaCalculated, v
